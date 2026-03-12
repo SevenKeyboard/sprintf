@@ -31,8 +31,10 @@ sprintf(formatStr, values*)    {
         . "(?<precisionPart>\.(?<precision>\*(?<precisionArgnum>0*\d+)\$|\*|\d*)?)?"
     static sprintfTokenPrefixRegEx := "OS)\A%" . sprintfTokenCoreRegEx
     static sprintfTokenRegEx := sprintfTokenPrefixRegEx . "(?<specifier>[sducoxXbeEfFgGhH])"
-    prevBacthLines := A_BatchLines
+    prevBacthLines      := A_BatchLines
     setBatchLines -1
+    prevCritical        := A_IsCritical
+    critical
     prevFormatFloat     := A_FormatFloat 
     prevFormatInteger   := A_FormatInteger
     setFormat % "FloatFast", % 0.17 ;  The default format specifier for floating-point numbers is now .17g (was 0.6f), which is more compact and more accurate in many cases.
@@ -154,6 +156,7 @@ sprintf(formatStr, values*)    {
     }  finally  {
         setFormat % "FloatFast", % prevFormatFloat
         setFormat % "IntegerFast", % prevFormatInteger
+        critical % prevCritical
         setBatchLines % prevBacthLines
     }
 }
