@@ -38,6 +38,9 @@ msgBox % sprintf("[%c]", 10)                                ;  "[`n]"
 msgBox % sprintf("[%c]", 233)                               ;  "[é]"
                                                                 ;  Actual PHP behavior: a raw byte 0xE9 is emitted.
                                                                 ;  Depending on the display environment, it may or may not appear as "é".
+msgBox % sprintf("[%c]", 0x1F600)                           ;  "[😀]"
+                                                                ;  Actual PHP behavior: a raw byte 0x00 is emitted.
+                                                                ;  It does not produce "😀"; the output depends on how that NUL byte is handled by the display environment.
 
 ;==============================================================
 ; Float specifiers

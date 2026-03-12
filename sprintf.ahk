@@ -17,7 +17,7 @@ class VersionManager_sprintf
     static _ := VersionManager_sprintf._init()
     _init()    {
         global
-        SPRINTF_VERSION := "1.0.0"
+        SPRINTF_VERSION := "1.1.0"
     }
 }
 vsprintf(formatStr, values)    {
@@ -305,7 +305,11 @@ class _FormattedPrint
     }
     ;-------------------------------------------------------------------------------------------
     _sprintfAppendChar(value)    {
-        return chr(value & 0xFF)
+        if (!this._isInteger(value))
+            value := value + 0
+        if !(0 <= value && value <= 0x10FFFF)
+            throw exception("Character code must be between 0 and 1114111", -1)
+        return chr(value) ;  chr(value & 0xFF)
     }
     ;-------------------------------------------------------------------------------------------
     _sprintfAppendInteger(value, specifier, width, precision, hasPrecision, flagInfo)    {
