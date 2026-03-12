@@ -129,6 +129,6 @@ catch err
     msgBox % "Error: " . err.Message                        ;  "Error: Precision -1 is only supported for %g, %G, %h and %H"
 
 try sprintf("[%")
-catch  err
+catch err
     msgBox % "Error: " . err.Message                        ;  "Error: Missing format specifier at end of string"
                                                                 ;  Actual PHP exception: "ArgumentCountError: 2 arguments are required, 1 given"
