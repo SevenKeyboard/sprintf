@@ -1,2 +1,2 @@
 # sprintf
-AutoHotkey implementations of sprintf-style string formatting.
+Implementations of sprintf-style string formatting across dialects.
