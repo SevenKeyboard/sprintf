@@ -1,6 +1,6 @@
 ﻿#Requires AutoHotkey v1.1.35+
 ;==============================================================
-; sprintf — PHP-style formatted string builder
+; phpSprintf — PHP-style formatted string builder
 ;
 ; GitHub: https://github.com/SevenKeyboard/sprintf
 ; Author: SevenKeyboard Ltd. (2026)
@@ -12,18 +12,18 @@
 ;   formatted_print.c
 ;     https://github.com/php/php-src/blob/master/ext/standard/formatted_print.c
 ;==============================================================
-class VersionManager_sprintf
+class VersionManager_phpSprintf
 {
-    static _ := VersionManager_sprintf._init()
+    static _ := VersionManager_phpSprintf._init()
     _init()    {
         global
-        SPRINTF_VERSION := "1.1.0"
+        PHPSPRINTF_VERSION := "1.1.0"
     }
 }
-vsprintf(formatStr, values)    {
-    return sprintf(formatStr, values*)
+phpVsprintf(formatStr, values)    {
+    return phpSprintf(formatStr, values*)
 }
-sprintf(formatStr, values*)    {
+phpSprintf(formatStr, values*)    {
     ;  %[argnum$][flags][width][.precision]specifier
     static sprintfTokenCoreRegEx := "(?:(?<argnum>0*\d+)\$)?"
         . "(?<flags>(?:(?:[-+ 0])|(?:'.))*)"
@@ -99,7 +99,7 @@ sprintf(formatStr, values*)    {
                 if !(0 < widthArgnum && widthArgnum < 2147483647)
                     throw exception("Width argument number specifier must be greater than zero and less than 2147483647", -1)
             }
-            if (width !== "" && widthArgnum == "" && _FormattedPrint._isInteger(width))    {
+            if (width !== "" && widthArgnum == "" && _PhpFormatPrinter._isInteger(width))    {
                 width := width + 0
                 if !(0 <= width && width < 2147483647)
                     throw exception("Width must be between 0 and 2147483647", -1)
@@ -114,7 +114,7 @@ sprintf(formatStr, values*)    {
             }
             hasPrecision        := (precisionPart !== "")
             isEmptyPrecision    := (precisionPart == ".")
-            isNumericPrecision  := (precision !== "" && precisionArgnum == "" && _FormattedPrint._isInteger(precision))
+            isNumericPrecision  := (precision !== "" && precisionArgnum == "" && _PhpFormatPrinter._isInteger(precision))
             if (isNumericPrecision)    {
                 precision := precision + 0
                 if !(0 <= precision && precision < 2147483647)
@@ -145,7 +145,7 @@ sprintf(formatStr, values*)    {
             switch (segment.type)
             {
                 case "token":
-                    result .= _FormattedPrint.sprintfRenderToken(segment, values, nextImplicitArgIndex)
+                    result .= _PhpFormatPrinter.sprintfRenderToken(segment, values, nextImplicitArgIndex)
                 default:
                     result .= segment.text            
             }
@@ -160,7 +160,7 @@ sprintf(formatStr, values*)    {
         setBatchLines % prevBacthLines
     }
 }
-class _FormattedPrint
+class _PhpFormatPrinter
 {
     ;  WARNING: Backward compatibility is not guaranteed for any methods or properties in this class.
     sprintfRenderToken(segment, values, byRef nextImplicitArgIndex)    {
@@ -377,7 +377,7 @@ class _FormattedPrint
             ,specifier == "d" ? flagInfo.alwaysSign : false)
     }
     _sprintfGetWordByteWidth()    {
-        return 8 ;  (A_PtrSize == 4 ? 4 : 8)
+        return 8 ;  A_PtrSize
     }
     _sprintfIntToWordHex(value)    {
         byteWidth := this._sprintfGetWordByteWidth()
