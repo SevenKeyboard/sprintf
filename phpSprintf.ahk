@@ -37,7 +37,7 @@ phpSprintf(formatStr, values*)    {
     critical
     prevFormatFloat     := A_FormatFloat
     prevFormatInteger   := A_FormatInteger
-    setFormat % "FloatFast", % 0.17 ;  The default format specifier for floating-point numbers is now .17g (was 0.6f), which is more compact and more accurate in many cases.
+    setFormat % "FloatFast", % 0.17 ;  Changes from v1.1 to v2.0: The default format specifier for floating-point numbers is now .17g (was 0.6f), which is more compact and more accurate in many cases.
     setFormat % "IntegerFast", % "D"
     try  {
         fragments := []
