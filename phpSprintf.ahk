@@ -17,7 +17,7 @@ class VersionManager_phpSprintf
     static _ := this._init()
     static _init()    {
         global
-        PHPSPRINTF_VERSION := "1.1.0"
+        PHPSPRINTF_VERSION := "1.1.1"
     }
 }
 phpVsprintf(formatStr, values) => phpSprintf(formatStr, values*)
@@ -459,13 +459,15 @@ class _PhpFormatPrinter
         }
         isNegative := false
         text := ""
-        if (value !== value)
-            return "NaN"
-        if (value == this._getPosInf())
-            return "INF"
-        if (value == this._getNegInf())    {
-            isNegative := true
-            return "INF"    
+        if (type(value) == "Float")    {
+            if (value !== value)
+                return "NaN"
+            if (value == this._getPosInf())
+                return "INF"
+            if (value == this._getNegInf())    {
+                isNegative := true
+                return "INF"
+            }
         }
         switch specifier, true
         {
