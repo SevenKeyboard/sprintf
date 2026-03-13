@@ -35,7 +35,7 @@ phpSprintf(formatStr, values*)    {
     setBatchLines -1
     prevCritical        := A_IsCritical
     critical
-    prevFormatFloat     := A_FormatFloat 
+    prevFormatFloat     := A_FormatFloat
     prevFormatInteger   := A_FormatInteger
     setFormat % "FloatFast", % 0.17 ;  The default format specifier for floating-point numbers is now .17g (was 0.6f), which is more compact and more accurate in many cases.
     setFormat % "IntegerFast", % "D"
