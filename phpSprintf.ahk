@@ -1,6 +1,6 @@
 ﻿#Requires AutoHotkey v2.0.0+
 ;==============================================================
-; sprintf — PHP-style formatted string builder
+; phpSprintf — PHP-style formatted string builder
 ;
 ; GitHub: https://github.com/SevenKeyboard/sprintf
 ; Author: SevenKeyboard Ltd. (2026)
@@ -12,16 +12,16 @@
 ;   formatted_print.c
 ;     https://github.com/php/php-src/blob/master/ext/standard/formatted_print.c
 ;==============================================================
-class VersionManager_sprintf
+class VersionManager_phpSprintf
 {
     static _ := this._init()
     static _init()    {
         global
-        SPRINTF_VERSION := "1.1.0"
+        PHPSPRINTF_VERSION := "1.1.0"
     }
 }
-vsprintf(formatStr, values) => sprintf(formatStr, values*)
-sprintf(formatStr, values*)    {
+phpVsprintf(formatStr, values) => phpSprintf(formatStr, values*)
+phpSprintf(formatStr, values*)    {
     ;  %[argnum$][flags][width][.precision]specifier
     static sprintfTokenCoreRegEx := "(?:(?<argnum>0*\d+)\$)?"
         . "(?<flags>(?:(?:[-+ 0])|(?:'.))*)"
@@ -134,14 +134,14 @@ sprintf(formatStr, values*)    {
         switch (segment.type)
         {
             case "token":
-                result .= _FormattedPrint.sprintfRenderToken(segment, values, &nextImplicitArgIndex)
+                result .= _PhpFormatPrinter.sprintfRenderToken(segment, values, &nextImplicitArgIndex)
             default:
                 result .= segment.text            
         }
     }
     return result
 }
-class _FormattedPrint
+class _PhpFormatPrinter
 {
     ;  WARNING: Backward compatibility is not guaranteed for any methods or properties in this class.
     static sprintfRenderToken(segment, values, &nextImplicitArgIndex)    {
@@ -336,7 +336,7 @@ class _FormattedPrint
             ,specifier == "d" ? flagInfo.alwaysSign : false)
     }
     static _sprintfGetWordByteWidth()    {
-        return 8 ;  (A_PtrSize == 4 ? 4 : 8)
+        return 8 ;  A_PtrSize
     }
     static _sprintfIntToWordHex(value)    {
         byteWidth := this._sprintfGetWordByteWidth()
