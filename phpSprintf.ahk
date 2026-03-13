@@ -17,7 +17,7 @@ class VersionManager_phpSprintf
     static _ := VersionManager_phpSprintf._init()
     _init()    {
         global
-        PHPSPRINTF_VERSION := "1.1.0"
+        PHPSPRINTF_VERSION := "1.1.1"
     }
 }
 phpVsprintf(formatStr, values)    {
@@ -495,8 +495,8 @@ class _PhpFormatPrinter
         }
         isNegative := false
         text := ""
-        if (value !== value)
-            return "NaN"
+        ;  In v1, this is a compatibility check, not a strict IEEE bit-pattern test.
+        ;  A textual value like "1.#INF00" may compare the same as actual infinity.
         if (value == this._getPosInf())
             return "INF"
         if (value == this._getNegInf())    {
