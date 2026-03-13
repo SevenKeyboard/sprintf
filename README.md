@@ -1,2 +1,2 @@
 # sprintf
-PHP-style formatted string builder.
+AutoHotkey implementations of sprintf-style string formatting.
